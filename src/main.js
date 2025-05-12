@@ -437,11 +437,11 @@ export default class FeatureService {
 
     const attributionController = this._map._controls.find(c => '_attribHTML' in c)
 
-    if (!attributionController) return
+    if (!attributionController || !this._esriServiceOptions.setAttributionFromService) return
 
     const customAttribution = attributionController.options.customAttribution
-
-    if (typeof customAttribution === 'string') {
+    
+    if (typeof customAttribution === 'string' && !customAttribution.includes(POWERED_BY_ESRI_ATTRIBUTION_STRING)) {
       attributionController.options.customAttribution = `${customAttribution} | ${POWERED_BY_ESRI_ATTRIBUTION_STRING}`
     } else if (customAttribution === undefined) {
       attributionController.options.customAttribution = POWERED_BY_ESRI_ATTRIBUTION_STRING
